@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CallMessage</string>
+    <string name="contactNumber">CALL</string>
+    <string name="mesageNumber">SEND SMS</string>
+</resources>
