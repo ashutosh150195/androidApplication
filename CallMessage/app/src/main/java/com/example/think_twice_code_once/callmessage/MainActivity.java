@@ -96,6 +96,47 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//     private void sendSMS() {
+//         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//             @Override
+//             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//             // TODO Auto-generated method stub
+//                 String number = phoneNumber[position];
+//                 String msg= "Task Completed";
+
+//                 Toast.makeText(getApplicationContext() , phoneNumber[position] , Toast.LENGTH_LONG).show();
+
+//                 //Getting intent and PendingIntent instance
+//                 Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+//                 PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
+
+//                 //Get the SmsManager instance and call the sendTextMessage method to send message
+//                 SmsManager sms=SmsManager.getDefault();
+//                 sms.sendTextMessage(number , null , msg , pi , null);
+//                 Toast.makeText(getApplicationContext(), "Message Sent successfully!",
+//                         Toast.LENGTH_LONG).show();
+
+//             }});
+
+//     }
+
+//     private void makeCall() {
+
+//         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//             @Override
+//             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                 // TODO Auto-generated method stub
+//                 String number = phoneNumber[position];
+//                 Toast.makeText(getApplicationContext() , phoneNumber[position] , Toast.LENGTH_LONG).show();
+//                  Intent callIntent = new Intent();
+//                 callIntent.setAction(Intent.ACTION_CALL);
+//                 callIntent.setData(Uri.parse("tel:"+number));
+//                 startActivity(callIntent);
+//                 Toast.makeText(getApplicationContext(), "Call Sent successfully!",
+//                 Toast.LENGTH_LONG).show();
+//             }});
+//     }
+    
     private void sendSMS() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -104,17 +145,24 @@ public class MainActivity extends AppCompatActivity {
                 String number = phoneNumber[position];
                 String msg= "Task Completed";
 
-                Toast.makeText(getApplicationContext() , phoneNumber[position] , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext() , phoneNumber[position] , Toast.LENGTH_LONG).show();
+//
+//                //Getting intent and PendingIntent instance
+                Intent intent=new Intent(Intent.ACTION_SENDTO);
+//                PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
+//
+//                //Get the SmsManager instance and call the sendTextMessage method to send message
+//                SmsManager sms=SmsManager.getDefault();
+//                sms.sendTextMessage(number , null , msg , pi , null);
+//                Toast.makeText(getApplicationContext(), "Message Sent successfully!",
+//                        Toast.LENGTH_LONG).show();
 
-                //Getting intent and PendingIntent instance
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
+                intent.setData(Uri.parse("Send To :"+number));
+                intent.putExtra("Message Body" , msg);
+                intent.putExtra(Intent.EXTRA_STREAM ,number);
 
-                //Get the SmsManager instance and call the sendTextMessage method to send message
-                SmsManager sms=SmsManager.getDefault();
-                sms.sendTextMessage(number , null , msg , pi , null);
-                Toast.makeText(getApplicationContext(), "Message Sent successfully!",
-                        Toast.LENGTH_LONG).show();
+                if (intent.resolveActivity(getPackageManager())!= null)
+                    startActivity(intent);
 
             }});
 
@@ -131,9 +179,10 @@ public class MainActivity extends AppCompatActivity {
                  Intent callIntent = new Intent();
                 callIntent.setAction(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+number));
+                if (callIntent.resolveActivity(getPackageManager())!= null)
                 startActivity(callIntent);
-                Toast.makeText(getApplicationContext(), "Call Sent successfully!",
-                Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Call Sent successfully!",
+//                Toast.LENGTH_LONG).show();
             }});
     }
 }
